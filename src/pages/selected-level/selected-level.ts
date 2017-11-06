@@ -20,6 +20,7 @@ export class SelectedLevelPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectedLevelPage');
+    console.log("The selected Level is :" + this.navParams.get('level'));
   }
 
 }

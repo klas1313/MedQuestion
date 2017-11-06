@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Platform, ModalController, ModalOptions } from 'ionic-angular';
 import { Point } from "../../models/point";
 import { LevelCircles } from "../../models/level-circles";
+import { NavController } from 'ionic-angular';
+import { SelectedLevelPage } from "../../pages/selected-level/selected-level";
+
 
 /**
  * Generated class for the LevelsComponent component.
@@ -28,7 +31,7 @@ export class LevelsComponent {
   point: Point;
   circleLevels: LevelCircles[];
 
-  constructor(platform: Platform) {
+  constructor(private platform: Platform, private modal: ModalController ) {
     this.circleLevels = new Array();
     this.CIRC_RADIUS = 10;
     this.currentLevel = 1;
@@ -77,6 +80,17 @@ export class LevelsComponent {
       //returned a valid click of a circle....
       console.log("User clicked within circle!");
       console.log("Circle level is : "+ result.level);
+      const myModalOptions: ModalOptions = {
+        showBackdrop: true,
+        enableBackdropDismiss: false
+      };
+      const myModalData = {
+        level: result.level
+      };
+      const myModal = this.modal.create('ModalPage', {data: myModalData}, myModalOptions);
+      myModal.present();
+      console.log("After the model create function");
+      //this.navCtrl.push(SelectedLevelPage, data);
     }
   }
 

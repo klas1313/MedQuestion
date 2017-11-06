@@ -6,12 +6,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LevelsComponent } from "../components/levels/levels";
+import { SelectedLevelPage } from "../pages/selected-level/selected-level";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LevelsComponent
+    LevelsComponent,
+    SelectedLevelPage
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,8 @@ import { LevelsComponent } from "../components/levels/levels";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SelectedLevelPage
   ],
   providers: [
     StatusBar,
