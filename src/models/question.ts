@@ -36,7 +36,7 @@ export class Question implements QuestionInterface{
   set points(points){ this._points = points; }
   set time(time){ this._time = time; }
 
-  calculatePoints
+  calculatePoints(){}
 
 
 }
