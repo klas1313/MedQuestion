@@ -1,22 +1,24 @@
-export class Point{
-  x: number;
-  y: number;
+import {PointInterface} from "./interfaces/point-interface";
+
+export class Point implements  PointInterface{
+  _x: number;
+  _y: number;
 
   constructor(x:number, y:number){
-    this.x = x;
-    this.y = y;
+    this._x = x;
+    this._y = y;
   }
-  get pointX():number{
-    return this.x;
+  get x():number{
+    return this._x;
   }
-  get pointY():number{
-    return this.y;
+  get y():number{
+    return this._y;
   }
-  set pointX(x:number){
-    this.x = x;
+  set x(x:number){
+    this._x = x;
   }
-  set pointY(y:number){
-    this.y = y;
+  set y(y:number){
+    this._y = y;
   }
 
 }
