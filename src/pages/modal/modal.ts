@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { SelectedLevelPage } from "../selected-level/selected-level";
 
 /**
  * Generated class for the ModalPage page.
@@ -17,7 +18,7 @@ export class ModalPage {
   level:number;
   target:number;
 
-  constructor(private view: ViewController, private navParams: NavParams) {
+  constructor(private view: ViewController, private navParams: NavParams, private navCtrl:NavController) {
     this.target = 3000;
   }
 
@@ -31,4 +32,10 @@ export class ModalPage {
     this.view.dismiss();
   }
 
+  playLevel(){
+    const myData = {
+      level: this.level
+    };
+    this.navCtrl.push('SelectedLevelPage', {data: myData});
+  }
 }

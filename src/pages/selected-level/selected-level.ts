@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import questionData from '../../data/dummy-data';
 
 /**
  * Generated class for the SelectedLevelPage page.
@@ -14,13 +15,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'selected-level.html',
 })
 export class SelectedLevelPage {
+  json:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectedLevelPage');
-    console.log("The selected Level is :" + this.navParams.get('level'));
+    let data = this.navParams.get('data');
+    console.log("The selected Level is :" + data.level);
+
+    console.log(questionData);
+
+
+
+
   }
+
 
 }
