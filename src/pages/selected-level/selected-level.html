@@ -7,12 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center>selected-level</ion-title>
+    <ion-title text-center>Level {{level}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center padding>
 
+  <h1>{{instructions}}</h1>
+  <button ion-button *ngIf="isQuestionAvailable()"   (click)="startQuestions()">Begin!</button>
 </ion-content>

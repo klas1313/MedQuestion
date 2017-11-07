@@ -2,8 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import {Platform, ModalController, ModalOptions } from 'ionic-angular';
 import { Point } from "../../models/point";
 import { LevelCircles } from "../../models/level-circles";
-import { NavController } from 'ionic-angular';
-import { SelectedLevelPage } from "../../pages/selected-level/selected-level";
+
 
 
 /**
@@ -50,6 +49,7 @@ export class LevelsComponent {
   ngAfterViewInit(){
     this.ctx = this.smileCanvas.nativeElement.getContext('2d');
 
+
     this.drawBoard();
 
     //this.ctx.rotate((90 * Math.PI)/180);
@@ -82,7 +82,8 @@ export class LevelsComponent {
       console.log("Circle level is : "+ result.level);
       const myModalOptions: ModalOptions = {
         showBackdrop: true,
-        enableBackdropDismiss: false
+        enableBackdropDismiss: false,
+        cssClass: '' //Could add a class for modal animation later perhaps.
       };
       const myModalData = {
         level: result.level
@@ -126,7 +127,9 @@ export class LevelsComponent {
     this.ctx.beginPath();
     this.ctx.arc(point.x, point.y, this.CIRC_RADIUS, 0, 2 * Math.PI, false);
     this.ctx.fillStyle = 'white';
+    this.ctx.globalCompositeOperation = 'source-over'; //Used to draw circle on top of line
     this.ctx.fill();
+    this.ctx.globalCompositeOperation = 'destination-over'; //When line is called later, it will appear behind circle.
   }
 
   drawLine(newPoint:Point){
