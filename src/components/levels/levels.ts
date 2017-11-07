@@ -33,7 +33,7 @@ export class LevelsComponent {
 
   constructor(private platform: Platform, private modal: ModalController ) {
     this.circleLevels = new Array();
-    this.CIRC_RADIUS = 10;
+    this.CIRC_RADIUS = 15;
     this.currentLevel = 1;
     this.levels = 12;
     this.canvasHeight = 1000;

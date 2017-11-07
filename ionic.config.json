@@ -1,6 +1,6 @@
 {
   "name": "MedicalApplication",
-  "app_id": "",
+  "app_id": "7b9b3ba2",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
