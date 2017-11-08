@@ -13,7 +13,8 @@
 </ion-header>
 
 
-<ion-content text-center padding (swipeleft)="swipeLeftEvent($event)" (swiperight)="swipeRightEvent($event)">
+<ion-content text-center padding>
+  <div class="divContent" (swipeleft)="swipeLeftEvent($event)" (swiperight)="swipeRightEvent($event)">
   <h1 *ngIf="quizIncomplete">{{questionCategory}}</h1>
   <h1 *ngIf="quizIncomplete">{{questionMessage}}</h1>
   <h1 *ngIf="!quizIncomplete">You have Finished the Quiz!</h1>
@@ -22,5 +23,6 @@
   <ion-footer *ngIf="!quizIncomplete">
     <button ion-button (click)="handleFinishedQuiz()">Return</button>
   </ion-footer>
+  </div>
 
 </ion-content>
