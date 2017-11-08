@@ -9,8 +9,10 @@ export class Question implements QuestionInterface{
   _source: string;
   _added: Date;
   _contributor: string;
-  _time:number;
+  _startTime:Date;
+  _endTime:Date;
   _points:number;
+  _playerAnswer:boolean;
 
   constructor(questionMessage:string, answerMessage:string, answer:boolean,
               category:string, difficulty:"Easy"|"Medium"|"Hard", source:string,
@@ -34,7 +36,10 @@ export class Question implements QuestionInterface{
   get added() { return this._added; }
   get contributor() { return this._contributor; }
   set points(points){ this._points = points; }
-  set time(time){ this._time = time; }
+  set startTime(time){ this._startTime = time; }
+  set endTime(time){ this._endTime = time; }
+  set playerAnswer(answer:boolean){ this._playerAnswer = answer; }
+  get playerAnswer(){ return this._playerAnswer; }
 
   calculatePoints(){}
 

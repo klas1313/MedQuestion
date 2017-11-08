@@ -20,8 +20,11 @@
   <ion-icon class="starIcon" name="star-outline"></ion-icon>
   <ion-icon class="starIcon" name="star-outline"></ion-icon>
   <h1>Target: {{ target }}</h1>
+  <h1>{{instructions}}</h1>
+
+
   <ion-footer>
-    <button ion-button (click)="playLevel()">Play!</button>
+    <button ion-button *ngIf="isQuestionAvailable()" (click)="startQuestions()">Play!</button>
   </ion-footer>
 
 </ion-content>

@@ -1,0 +1,55 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+
+/**
+ * Generated class for the AnswerModalPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-answer-modal',
+  templateUrl: 'answer-modal.html',
+})
+export class AnswerModalPage {
+  answerMessage:string;
+  correctAnswer:string;
+  playerAnswer:string;
+
+  constructor(private navCtrl: NavController, private navParams: NavParams, private view: ViewController) {
+  }
+
+  ionViewDidLoad() {
+    let data = this.navParams.get('data');
+    this.setCorrectAnswerString(data.answer);
+    this.answerMessage = data.answerMessage;
+    this.setPlayerAnswerString(data.playerAnswer);
+
+
+  }
+
+  setCorrectAnswerString(questionAnswer: boolean){
+    if(questionAnswer){
+      this.correctAnswer = "True";
+    }
+    else{
+      this.correctAnswer = "False";
+    }
+  }
+  setPlayerAnswerString(playerAnswer:boolean){
+    if(playerAnswer){
+      this.playerAnswer = "True";
+    }
+    else{
+      this.playerAnswer = "False";
+    }
+  }
+
+
+  dismiss(){
+    this.view.dismiss();
+  }
+
+}
