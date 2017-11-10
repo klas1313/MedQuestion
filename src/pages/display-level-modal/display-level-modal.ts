@@ -4,8 +4,9 @@ import { SelectedLevelPage } from "../selected-level/selected-level";
 import questionData from '../../data/dummy-data';
 import { Question } from "../../models/question";
 
+
 /**
- * Generated class for the ModalPage page.
+ * Generated class for the DisplayLevelModalPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,19 +14,20 @@ import { Question } from "../../models/question";
 
 @IonicPage()
 @Component({
-  selector: 'page-modal',
-  templateUrl: 'modal.html',
+  selector: 'page-display-level-modal',
+  templateUrl: 'display-level-modal.html',
 })
-export class ModalPage {
+export class DisplayLevelModalPage {
   level:number;
   target:number;
   instructions: string;
   levelQuestions:Question[];
 
+
   constructor(private view: ViewController, private navParams: NavParams, private navCtrl:NavController) {
     this.levelQuestions = new Array();
     this.target = 3000;
-    this.instructions = "You will be asked a series of True or false questions. Swipe" +
+    this.instructions = "This is the Display Levels! You will be asked a series of True or false questions. Swipe" +
       " right to answer true, swipe left to answer false";
   }
 

@@ -71,7 +71,7 @@ export class LevelsComponent {
       const myModalData = {
         level: result.level
       };
-      const myModal = this.modal.create('ModalPage', {data: myModalData}, myModalOptions);
+      const myModal = this.modal.create('DisplayLevelModalPage', {data: myModalData}, myModalOptions);
       myModal.present();
     }
   }
