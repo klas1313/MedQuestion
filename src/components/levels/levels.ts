@@ -66,7 +66,7 @@ export class LevelsComponent {
       const myModalOptions: ModalOptions = {
         showBackdrop: true,
         enableBackdropDismiss: false,
-        cssClass: '' //Could add a class for modal animation later perhaps?
+        cssClass: 'animated bounceInDown modalSize' //Could add a class for modal animation later perhaps?
       };
       const myModalData = {
         level: result.level

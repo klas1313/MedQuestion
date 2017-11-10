@@ -42,16 +42,31 @@ quizIncomplete:boolean;
     this.setNextQuestion();
 
   }
+
+  /*
+  Function used for when user answers question
+  @Param: Boolean, true or false, true if user swiped right, false if swipe left.
+  //Will be used to determine time taken to answer question, calculate formula for points
+
+
+  At the moment function just sets users answer to true or false.
+   */
   handleAnswer(answer:boolean){
     this.currentQuestion.playerAnswer = answer;
     this.delegateToModal();
   }
 
+  /*
+  Handles event for when user swipes Left.
+   */
   swipeLeftEvent(event){
     this.handleAnswer(false);
     //Add some other logic here eventually...
   }
 
+  /*
+  Handles event for when user swipes Right.
+   */
   swipeRightEvent(event){
     this.handleAnswer(true);
     //Add some other logic here eventually...
@@ -67,11 +82,15 @@ quizIncomplete:boolean;
     const myModal = this.modal.create('AnswerModalPage', {data: myModalData}, myModalOptions);
     myModal.present();
     this.setNextQuestion();
-
-
   }
+
+
+  /*
+  Function to set the next question
+   */
   setNextQuestion(){
     if(this.startingQuestionArray.length === 0){
+      //When this changes, the view changes, see selected-level.html
       this.quizIncomplete = false;
     }
     else{
@@ -84,15 +103,16 @@ quizIncomplete:boolean;
     }
   }
 
+
+  /*
+  Function for when quiz is finished.
+  For now just releases control of view back to DisplayLevelModalPage of current level that was selected
+  before selecting level.
+   */
   handleFinishedQuiz(){
     console.log("no more Questions..");
     this.navCtrl.pop();
   }
-
-
-
-
-
 
 
 }
