@@ -18,50 +18,35 @@ import { LevelCircles } from "../../models/level-circles";
 export class LevelsComponent {
   @ViewChild('levelCanvas') smileCanvas;
 
-  //These specific to example.
-  //smileHeight: number = 250;
-  //rating: number = Math.round(100 - ((250 - this.smileHeight) / 2));
+  CIRC_RADIUS: number = 15;
+  LEVELS_AVAILABLE: number = 12;
+  CIRCLE_COLOUR: string = "white";
+  LINE_WIDTH:number = 4;
+
+
+
   ctx: any;
-  levels: number;
   currentLevel: number;
   canvasHeight: number;
   canvasWidth: number;
-  CIRC_RADIUS: number;
-  point: Point;
-  circleLevels: LevelCircles[];
+  currentPoint: Point;
+  newPoint: Point = new Point(0,0);
+  circleLevels: LevelCircles[] = new Array();
 
   constructor(private platform: Platform, private modal: ModalController ) {
-    this.circleLevels = new Array();
-    this.CIRC_RADIUS = 15;
     this.currentLevel = 1;
-    this.levels = 12;
     this.canvasHeight = 1000;
     this.canvasWidth = platform.width();
-    console.log(platform.width());
 
-    console.log(this.canvasWidth);
-    console.log('Hello LevelsComponent Component');
-    this.point = new Point(this.canvasWidth/11, 50);
+    this.currentPoint = new Point(this.canvasWidth/11, 50);
 
 
   }
 
   ngAfterViewInit(){
     this.ctx = this.smileCanvas.nativeElement.getContext('2d');
-
-
+    this.ctx.lineWidth = this.LINE_WIDTH;
     this.drawBoard();
-
-    //this.ctx.rotate((90 * Math.PI)/180);
-    // let hammer = new window['Hammer'](this.smileCanvas.nativeElement);
-    // hammer.get('pan').set({ direction: window['Hammer'].DIRECTION_ALL });
-    //
-    // hammer.on('pan', (ev) => {
-    //   this.handlePan(ev);
-    // });
-    //this.drawLine((this.canvasWidth*70)/100, this.point.y);
-
-
 
   }
 
@@ -74,29 +59,25 @@ export class LevelsComponent {
     if(!result){
       console.log("user clicked outside of circle");
       return;
-      //returned null... handle moving the canvas..
+      //returned null... will default to handle moving the canvas..
     }
     else{
       //returned a valid click of a circle....
-      console.log("User clicked within circle!");
-      console.log("Circle level is : "+ result.level);
       const myModalOptions: ModalOptions = {
         showBackdrop: true,
         enableBackdropDismiss: false,
-        cssClass: '' //Could add a class for modal animation later perhaps.
+        cssClass: '' //Could add a class for modal animation later perhaps?
       };
       const myModalData = {
         level: result.level
       };
       const myModal = this.modal.create('ModalPage', {data: myModalData}, myModalOptions);
       myModal.present();
-      console.log("After the model create function");
-      //this.navCtrl.push(SelectedLevelPage, data);
     }
   }
 
   /*
-  @param clickPoint: Point - The point location of where the end user has clicked.
+  @param clickPoint: Point - The currentPoint location of where the end user has clicked.
   @return - Returns the circle level object, if a valid click on circle is found, otherwise returns null;
    */
   determineCircleClicked(clickPoint:Point){
@@ -112,8 +93,9 @@ export class LevelsComponent {
 
   /*
   Finds distance between two points using pythagorean theorem.
-  @Param circlePoint: Point - The point location of the center of a circle
-  @Param clickPoint: Point - The point location of where the end user has clicked.
+  @Param circlePoint: Point - The currentPoint location of the center of a circle
+  @Param clickPoint: Point - The currentPoint location of where the end user has clicked.
+  @Return: Returns the Distance^2 of the two points.
    */
   findDistance(circlePoint:Point, clickPoint:Point){
     return ((clickPoint.x - circlePoint.x) * (clickPoint.x - circlePoint.x)) +
@@ -126,7 +108,7 @@ export class LevelsComponent {
     this.currentLevel++;
     this.ctx.beginPath();
     this.ctx.arc(point.x, point.y, this.CIRC_RADIUS, 0, 2 * Math.PI, false);
-    this.ctx.fillStyle = 'white';
+    this.ctx.fillStyle = this.CIRCLE_COLOUR;
     this.ctx.globalCompositeOperation = 'source-over'; //Used to draw circle on top of line
     this.ctx.fill();
     this.ctx.globalCompositeOperation = 'destination-over'; //When line is called later, it will appear behind circle.
@@ -134,62 +116,78 @@ export class LevelsComponent {
 
   drawLine(newPoint:Point){
     this.ctx.beginPath();
-    this.ctx.moveTo(this.point.x, this.point.y);
+    this.ctx.moveTo(this.currentPoint.x, this.currentPoint.y);
     this.ctx.lineTo(newPoint.x, newPoint.y);
-    this.point.x = newPoint.x;
-    this.point.y = newPoint.y;
+    this.currentPoint.x = newPoint.x;
+    this.currentPoint.y = newPoint.y;
     this.ctx.stroke();
   }
 
   bezierCurveRight(newPoint:Point){
     this.ctx.beginPath();
-    this.ctx.moveTo(this.point.x, this.point.y);
-    this.ctx.bezierCurveTo(this.point.x+this.canvasWidth/8, this.point.y + 50,
-      this.point.x+this.canvasWidth/11, this.point.y+100, newPoint.x, newPoint.y);
-    this.point.x = newPoint.x;
-    this.point.y = newPoint.y;
+    this.ctx.moveTo(this.currentPoint.x, this.currentPoint.y);
+    this.ctx.bezierCurveTo(this.currentPoint.x+this.canvasWidth/8, this.currentPoint.y + 50,
+      this.currentPoint.x+this.canvasWidth/11, this.currentPoint.y+100, newPoint.x, newPoint.y);
+    this.currentPoint.x = newPoint.x;
+    this.currentPoint.y = newPoint.y;
     this.ctx.stroke();
   }
   bezierCurveLeft(newPoint:Point){
     this.ctx.beginPath();
-    this.ctx.moveTo(this.point.x, this.point.y);
-    this.ctx.bezierCurveTo(this.point.x-this.canvasWidth/8, this.point.y + 50,
-      this.point.x-this.canvasWidth/11, this.point.y+100, newPoint.x, newPoint.y);
-    this.point.x = newPoint.x;
-    this.point.y = newPoint.y;
+    this.ctx.moveTo(this.currentPoint.x, this.currentPoint.y);
+    this.ctx.bezierCurveTo(this.currentPoint.x-this.canvasWidth/8, this.currentPoint.y + 50,
+      this.currentPoint.x-this.canvasWidth/11, this.currentPoint.y+100, newPoint.x, newPoint.y);
+    this.currentPoint.x = newPoint.x;
+    this.currentPoint.y = newPoint.y;
     this.ctx.stroke();
+  }
+
+
+  /*
+  Utility function to set the new Points values
+  @Param: x: The x value for new Point
+  @Param: y: The y value for new Point
+  @return: Returns the reference to newPoint.
+   */
+  setNewPoint(x:number, y:number){
+    this.newPoint.x = x;
+    this.newPoint.y = y;
+
+    return this.newPoint;
+
   }
 
 
 
   drawBoard(){
     let directionRight = true;
-    this.drawCircle(this.point);
-    for(let i=1; i<this.levels; i++){
-      if((this.point.x + (this.canvasWidth / 5) > this.canvasWidth)){
+    this.drawCircle(this.currentPoint);
+    for(let i=1; i<this.LEVELS_AVAILABLE; i++){
+      if((this.currentPoint.x + (this.canvasWidth / 5) > this.canvasWidth)){
         directionRight = false;
       }
-      else if((this.point.x - (this.canvasWidth / 5) < 0)){
+      else if((this.currentPoint.x - (this.canvasWidth / 5) < 0)){
         directionRight = true;
       }
       if(directionRight){
         if(i%5 === 0){
-          this.bezierCurveLeft(new Point(this.point.x, this.point.y + (this.canvasHeight/8)))
+          this.bezierCurveLeft(this.setNewPoint(this.currentPoint.x,
+            this.currentPoint.y + (this.canvasHeight/8) ));
         }
         else {
-          this.drawLine(new Point(this.point.x + (this.canvasWidth / 5), this.point.y));
+          this.drawLine(this.setNewPoint(this.currentPoint.x + (this.canvasWidth / 5), this.currentPoint.y));
         }
-        this.drawCircle(this.point);
+        this.drawCircle(this.currentPoint);
       }
       else{
         if(i%5 ===0){
-          this.bezierCurveRight(new Point(this.point.x, this.point.y + (this.canvasHeight/8)))
+          this.bezierCurveRight(this.setNewPoint(this.currentPoint.x, this.currentPoint.y + (this.canvasHeight/8)))
         }
         else{
-          this.drawLine(new Point(this.point.x - (this.canvasWidth / 5), this.point.y));
+          this.drawLine(this.setNewPoint(this.currentPoint.x - (this.canvasWidth / 5), this.currentPoint.y));
 
         }
-        this.drawCircle(this.point);
+        this.drawCircle(this.currentPoint);
       }
 
     }
