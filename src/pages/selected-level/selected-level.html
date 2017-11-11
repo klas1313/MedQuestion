@@ -5,9 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title text-center>Level {{level}}</ion-title>
+  <!--Hiding back button to force back to level screen.-->
+  <ion-navbar hideBackButton>
+    <ion-title text-center (ionChange)="incrementCounter()">Question {{questionNumber}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,13 +18,13 @@
     <h1>{{questionCategory}}</h1>
     <h1>{{questionMessage}}</h1>
   </div>
-  <div *ngIf="!quizIncomplete" class="divContent">
+  <div *ngIf="!quizIncomplete" (click)="handleFinishedQuiz()" class="divContent">
   <h1>You have Finished the Quiz!</h1>
   <h1>You answered {{correctQuestions}} questions Correctly!</h1>
   <h1>You Scored a total of {{totalPoints}} Points!</h1>
 
   <ion-footer *ngIf="!quizIncomplete">
-    <button ion-button (click)="handleFinishedQuiz()">Return</button>
+    <button ion-button >Return</button>
   </ion-footer>
   </div>
 

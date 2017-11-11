@@ -17,22 +17,24 @@ import { Question } from "../../models/question";
 })
 export class SelectedLevelPage {
 
-level:number;
+questionNumber:number;
 totalPoints:number;
 correctQuestions:number;
 questionMessage:string;
 questionCategory:string;
 playerAnswer:boolean;
+quizIncomplete:boolean;
+
 startingQuestionArray:Question[];
 finishedQuestionArray:Question[];
 currentQuestion:Question;
-quizIncomplete:boolean;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private modal:ModalController) {
     this.finishedQuestionArray = new Array();
     this.quizIncomplete = true;
     this.correctQuestions = 0;
     this.totalPoints = 0;
+    this.questionNumber = 0;
   }
 
   ionViewDidLoad() {
@@ -41,7 +43,6 @@ quizIncomplete:boolean;
       this.startingQuestionArray = data;
       this.setNextQuestion();
     }
-
   }
 
   /*
@@ -110,6 +111,8 @@ quizIncomplete:boolean;
       this.questionCategory = this.currentQuestion.category;
 
       this.currentQuestion.startTime = new Date();
+      this.incrementCounter();
+
     }
   }
 
@@ -120,6 +123,7 @@ quizIncomplete:boolean;
    */
   handleFinishedQuiz(){
     console.log("no more Questions..");
+    this.navCtrl.pop();
     this.navCtrl.pop();
   }
 
@@ -141,6 +145,11 @@ quizIncomplete:boolean;
   }
   tallyPoints(playerPoints:number){
     this.totalPoints += playerPoints;
+  }
+
+  incrementCounter(){
+    this.questionNumber++;
+    console.log("This getting called?");
   }
 
 
