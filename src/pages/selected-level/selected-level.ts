@@ -25,22 +25,25 @@ playerAnswer:boolean;
 startingQuestionArray:Question[];
 finishedQuestionArray:Question[];
 currentQuestion:Question;
+startTimer:Date;
 quizIncomplete:boolean;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private modal:ModalController) {
     this.finishedQuestionArray = new Array();
     this.quizIncomplete = true;
+    console.log("hello from constructor!");
+    this.startTimer = new Date();
   }
 
   ionViewDidLoad() {
-    console.log("Ion view did load getting executed!!!");
+    console.log("how many times is this getting called?");
+    console.log("Hello from selected level page!!!");
     let data = this.navParams.get('questions');
     if(data) {
       this.startingQuestionArray = data;
     }
     console.log(this.startingQuestionArray);
     this.setNextQuestion();
-
   }
 
   /*
@@ -53,6 +56,9 @@ quizIncomplete:boolean;
    */
   handleAnswer(answer:boolean){
     this.currentQuestion.playerAnswer = answer;
+
+    //When user answers set the questions endtime to current date.
+    this.currentQuestion.endTime = new Date();
     this.delegateToModal();
   }
 
@@ -80,8 +86,11 @@ quizIncomplete:boolean;
     };
     const myModalData = this.currentQuestion;
     const myModal = this.modal.create('AnswerModalPage', {data: myModalData}, myModalOptions);
+    myModal.onDidDismiss(data => {
+      this.setNextQuestion(); // Ensures that this function only runs when modal is closed
+    });
     myModal.present();
-    this.setNextQuestion();
+
   }
 
 
@@ -100,6 +109,10 @@ quizIncomplete:boolean;
       this.currentQuestion = this.startingQuestionArray.pop();
       this.questionMessage = this.currentQuestion.questionMessage;
       this.questionCategory = this.currentQuestion.category;
+
+      console.log("This about to get called?");
+
+     this.currentQuestion.startTime = new Date();
     }
   }
 

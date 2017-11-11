@@ -37,11 +37,25 @@ export class Question implements QuestionInterface{
   get contributor() { return this._contributor; }
   set points(points){ this._points = points; }
   set startTime(time){ this._startTime = time; }
+  get startTime(){return this._startTime;}
   set endTime(time){ this._endTime = time; }
   set playerAnswer(answer:boolean){ this._playerAnswer = answer; }
   get playerAnswer(){ return this._playerAnswer; }
 
-  calculatePoints(){}
+  calculateTimeToAnswer(){
+   // console.log("end time is : "+this._endTime.getTime());
+    //console.log("start time is : "+this._startTime.getTime());
+    return (this._endTime.getTime() - this._startTime.getTime()) / 1000;
+  }
+
+  calculatePoints(){
+    let questionTime = this.calculateTimeToAnswer();
+    console.log(questionTime);
+    if(questionTime > 30){
+      console.log("took longer than 30 seconds");
+      return 0;
+    }
+  }
 
 
 }

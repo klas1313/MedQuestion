@@ -17,6 +17,7 @@ export class AnswerModalPage {
   answerMessage:string;
   correctAnswer:string;
   playerAnswer:string;
+  timeTakenToAnswer:number;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private view: ViewController) {
   }
@@ -26,8 +27,13 @@ export class AnswerModalPage {
     this.setCorrectAnswerString(data.answer);
     this.answerMessage = data.answerMessage;
     this.setPlayerAnswerString(data.playerAnswer);
+    this.setTimeTakenToAnswer(data.calculateTimeToAnswer());
+    console.log(data.startTime);
+  }
 
+  setTimeTakenToAnswer(time:number){
 
+    this.timeTakenToAnswer = time;
   }
 
   setCorrectAnswerString(questionAnswer: boolean){
@@ -49,7 +55,7 @@ export class AnswerModalPage {
 
 
   dismiss(){
-    this.view.dismiss();
+    this.view.dismiss(new Date());
   }
 
 }

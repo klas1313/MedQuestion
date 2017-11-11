@@ -22,12 +22,13 @@ export class DisplayLevelModalPage {
   target:number;
   instructions: string;
   levelQuestions:Question[];
+  questionAvailable:boolean = false;
 
 
   constructor(private view: ViewController, private navParams: NavParams, private navCtrl:NavController) {
     this.levelQuestions = new Array();
     this.target = 3000;
-    this.instructions = "This is the Display Levels! You will be asked a series of True or false questions. Swipe" +
+    this.instructions = "You will be asked a series of True or false questions. Swipe" +
       " right to answer true, swipe left to answer false";
   }
 
@@ -45,7 +46,9 @@ export class DisplayLevelModalPage {
     questions = this.shuffleQuestions(questions);
     this.populateLevelQuestions(questions);
 
-    //console.log(questions);
+    this.isQuestionAvailable();
+
+
 
   }
 
@@ -94,20 +97,16 @@ export class DisplayLevelModalPage {
 
   /*
   Function to determine if the levelQuestions array has been populated or not
-  @return boolean : Returns true if levelQuestions array has been populated,
-  returns false if it has not.
+  Sets instance variable true if levelQuestions array has been populated,
+  else false if it has not.
    */
   isQuestionAvailable(){
-    console.log("how many times getting called?");
-    if(this.levelQuestions.length == 0) {
-      console.log("No questions found for this level!!");
-      return false;
-    }
-    return true;
+    //Checks if questions loaded into array, if they are view will display play button
+    this.questionAvailable = this.levelQuestions.length !== 0;
   }
 
   startQuestions(){
-    if(!this.isQuestionAvailable()){
+    if(this.levelQuestions.length == 0){
       console.log("no questions loaded in array, can't start!");
       return;
     }
