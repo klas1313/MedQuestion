@@ -1,6 +1,9 @@
 import {QuestionInterface} from "./interfaces/question-interface";
 
 export class Question implements QuestionInterface{
+  static _pointSpree: number = 0;
+  static _POINT_CONSTANT:number = 600;
+  _DIFFICULTY_MODIFIER:number;
   _questionMessage:string;
   _answerMessage: string;
   _answer: boolean;
@@ -22,10 +25,23 @@ export class Question implements QuestionInterface{
     this._answerMessage = answerMessage;
     this._answer = answer;
     this._category = category;
-    this. _difficulty = difficulty;
+    this._difficulty = difficulty;
     this._source = source;
     this._added = added;
     this._contributor = contributor;
+
+    switch(this._difficulty){
+      case "Easy":
+        this._DIFFICULTY_MODIFIER = 1;
+        break;
+      case "Medium":
+        this._DIFFICULTY_MODIFIER = 1.5;
+        break;
+      case "Hard":
+        this._DIFFICULTY_MODIFIER = 2;
+        break;
+    }
+
   }
   get questionMessage() {return this._questionMessage;}
   get answerMessage(){ return this._answerMessage;}
@@ -36,11 +52,14 @@ export class Question implements QuestionInterface{
   get added() { return this._added; }
   get contributor() { return this._contributor; }
   set points(points){ this._points = points; }
+  get points(){return this._points;  }
   set startTime(time){ this._startTime = time; }
   get startTime(){return this._startTime;}
   set endTime(time){ this._endTime = time; }
   set playerAnswer(answer:boolean){ this._playerAnswer = answer; }
   get playerAnswer(){ return this._playerAnswer; }
+  //set static pointSpree(pointSpree){ Question._pointSpree = pointSpree; }
+  //get static pointSpree(){return Question._pointSpree;}
 
   calculateTimeToAnswer(){
    // console.log("end time is : "+this._endTime.getTime());
@@ -50,11 +69,17 @@ export class Question implements QuestionInterface{
 
   calculatePoints(){
     let questionTime = this.calculateTimeToAnswer();
-    console.log(questionTime);
-    if(questionTime > 30){
-      console.log("took longer than 30 seconds");
-      return 0;
+    console.log(this.playerAnswer);
+    console.log(this.answer);
+    //If player answered wrong, or took too long to answer, set points to 0;
+    if(this.playerAnswer != this.answer || questionTime > 30){
+      this.points = 0;
+      return;
     }
+    //If they answered right and before time runs out....
+    this.points = Math.round(((-20*questionTime)+ Question._POINT_CONSTANT) *
+      (this._DIFFICULTY_MODIFIER + Question._pointSpree));
+
   }
 
 

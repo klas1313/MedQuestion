@@ -18,6 +18,7 @@ export class AnswerModalPage {
   correctAnswer:string;
   playerAnswer:string;
   timeTakenToAnswer:number;
+  pointsAwarded:number;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private view: ViewController) {
   }
@@ -29,7 +30,13 @@ export class AnswerModalPage {
     this.setPlayerAnswerString(data.playerAnswer);
     this.setTimeTakenToAnswer(data.calculateTimeToAnswer());
     console.log(data.startTime);
+    data.calculatePoints();
+    this.pointsAwarded = data.points;
+    console.log(data.difficulty);
+
   }
+
+
 
   setTimeTakenToAnswer(time:number){
 
@@ -55,7 +62,7 @@ export class AnswerModalPage {
 
 
   dismiss(){
-    this.view.dismiss(new Date());
+    this.view.dismiss();
   }
 
 }
