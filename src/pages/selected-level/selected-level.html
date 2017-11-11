@@ -18,11 +18,14 @@
     <h1>{{questionCategory}}</h1>
     <h1>{{questionMessage}}</h1>
   </div>
-  <h1 *ngIf="!quizIncomplete">You have Finished the Quiz!</h1>
-  <h1 *ngIf="!quizIncomplete">You answered {{itemsCorrect}} questions Correctly!</h1>
+  <div *ngIf="!quizIncomplete" class="divContent">
+  <h1>You have Finished the Quiz!</h1>
+  <h1>You answered {{correctQuestions}} questions Correctly!</h1>
+  <h1>You Scored a total of {{totalPoints}} Points!</h1>
 
   <ion-footer *ngIf="!quizIncomplete">
     <button ion-button (click)="handleFinishedQuiz()">Return</button>
   </ion-footer>
+  </div>
 
 </ion-content>

@@ -48,8 +48,6 @@ export class DisplayLevelModalPage {
 
     this.isQuestionAvailable();
 
-
-
   }
 
   populateLevelQuestions(questions){

@@ -18,6 +18,7 @@ import { Question } from "../../models/question";
 export class SelectedLevelPage {
 
 level:number;
+totalPoints:number;
 correctQuestions:number;
 questionMessage:string;
 questionCategory:string;
@@ -30,14 +31,17 @@ quizIncomplete:boolean;
   constructor(private navCtrl: NavController, private navParams: NavParams, private modal:ModalController) {
     this.finishedQuestionArray = new Array();
     this.quizIncomplete = true;
+    this.correctQuestions = 0;
+    this.totalPoints = 0;
   }
 
   ionViewDidLoad() {
     let data = this.navParams.get('questions');
     if(data) {
       this.startingQuestionArray = data;
+      this.setNextQuestion();
     }
-    this.setNextQuestion();
+
   }
 
   /*
@@ -89,21 +93,23 @@ quizIncomplete:boolean;
   Function to set the next question
    */
   setNextQuestion(){
+    if(this.currentQuestion){ //If current Question is not null.
+      this.finishedQuestionArray.push(this.currentQuestion);
+    }
     if(this.startingQuestionArray.length === 0){
+      if(this.finishedQuestionArray.length > 0){
+        console.log(this.finishedQuestionArray);
+        this.calculateResults(); //Quiz is finished, time to tally points and correct answers.
+      }
       //When this changes, the view changes, see selected-level.html
       this.quizIncomplete = false;
     }
     else{
-      if(!this.currentQuestion){ //If current Question is not null.
-        this.finishedQuestionArray.push(this.currentQuestion);
-      }
       this.currentQuestion = this.startingQuestionArray.pop();
       this.questionMessage = this.currentQuestion.questionMessage;
       this.questionCategory = this.currentQuestion.category;
 
-      console.log("This about to get called?");
-
-     this.currentQuestion.startTime = new Date();
+      this.currentQuestion.startTime = new Date();
     }
   }
 
@@ -115,6 +121,26 @@ quizIncomplete:boolean;
   handleFinishedQuiz(){
     console.log("no more Questions..");
     this.navCtrl.pop();
+  }
+
+
+  calculateResults(){
+   // console.log();
+    let currentQuestion;
+    for(let i=0; i < this.finishedQuestionArray.length; i++){
+      currentQuestion = this.finishedQuestionArray[i];
+      console.log(currentQuestion);
+      this.tallyPoints(currentQuestion.points);
+      this.tallyCorrectAnswer(currentQuestion.playerAnswer, currentQuestion.answer);
+    }
+  }
+  tallyCorrectAnswer(playerAns:boolean, questionAns:boolean){
+    if(playerAns == questionAns){
+      this.correctQuestions++;
+    }
+  }
+  tallyPoints(playerPoints:number){
+    this.totalPoints += playerPoints;
   }
 
 

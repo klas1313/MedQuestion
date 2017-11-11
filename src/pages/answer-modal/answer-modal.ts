@@ -60,7 +60,6 @@ export class AnswerModalPage {
     }
   }
 
-
   dismiss(){
     this.view.dismiss();
   }

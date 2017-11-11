@@ -2,7 +2,8 @@ import {QuestionInterface} from "./interfaces/question-interface";
 
 export class Question implements QuestionInterface{
   static _pointSpree: number = 0;
-  static _POINT_CONSTANT:number = 600;
+  static _POINT_Y_INTERCEPT:number = 600;
+  static _SLOPE:number = (Question._POINT_Y_INTERCEPT/30) * -1 ;
   _DIFFICULTY_MODIFIER:number;
   _questionMessage:string;
   _answerMessage: string;
@@ -77,7 +78,7 @@ export class Question implements QuestionInterface{
       return;
     }
     //If they answered right and before time runs out....
-    this.points = Math.round(((-20*questionTime)+ Question._POINT_CONSTANT) *
+    this.points = Math.round(((Question._SLOPE * questionTime)+ Question._POINT_Y_INTERCEPT) *
       (this._DIFFICULTY_MODIFIER + Question._pointSpree));
 
   }
