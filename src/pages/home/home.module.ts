@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
-import { LevelsComponent } from '../../components/levels/levels';
+//import { GameboardComponent } from "../../components/gameboard/gameboard";
 
 @NgModule({
   declarations: [
     HomePage
   ],
   imports: [
-    LevelsComponent,
+    //GameboardComponent,
     IonicPageModule.forChild(HomePage)
   ],
   exports: [
