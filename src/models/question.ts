@@ -18,6 +18,8 @@ export class Question implements QuestionInterface{
   _points:number;
   _playerAnswer:boolean;
 
+  //Refactor all of this
+
   constructor(questionMessage:string, answerMessage:string, answer:boolean,
               category:string, difficulty:"Easy"|"Medium"|"Hard", source:string,
               added:Date, contributor:string ){
