@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LevelsComponent } from "../components/levels/levels";
 //import { AnimatorModule } from "css-animator";
+import { GameboardComponent } from "../components/gameboard/gameboard";
 
 //import { SelectedLevelPage } from "../pages/selected-level/selected-level";
 
@@ -14,7 +14,7 @@ import { LevelsComponent } from "../components/levels/levels";
   declarations: [
     MyApp,
     HomePage,
-    LevelsComponent,
+    GameboardComponent,
 
   ],
   imports: [

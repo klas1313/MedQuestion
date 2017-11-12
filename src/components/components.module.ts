@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { LevelsComponent } from './levels/levels';
+import { GameboardComponent } from './gameboard/gameboard';
+
 @NgModule({
-	declarations: [LevelsComponent],
+	declarations: [GameboardComponent],
 	imports: [],
-	exports: [LevelsComponent]
+	exports: [GameboardComponent]
 })
 export class ComponentsModule {}
